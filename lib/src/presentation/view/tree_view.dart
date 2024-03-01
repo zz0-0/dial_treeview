@@ -1,9 +1,15 @@
 import 'package:dial_treeview/src/domain/model/tree_node.dart';
+import 'package:dial_treeview/src/presentation/widget/tree_node_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreeView extends ConsumerStatefulWidget {
-  const TreeView(this.nodes, this.indent, this.iconSize, {super.key});
+  const TreeView({
+    super.key,
+    required this.nodes,
+    this.indent = 40,
+    this.iconSize,
+  });
 
   final List<TreeNode> nodes;
   final double? indent;
@@ -16,6 +22,14 @@ class TreeView extends ConsumerStatefulWidget {
 class _TreeViewState extends ConsumerState<TreeView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      children: [
+        for (final node in widget.nodes)
+          TreeNodeWidget(
+            node: node,
+            indent: widget.indent!,
+          ),
+      ],
+    );
   }
 }
