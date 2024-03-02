@@ -5,5 +5,9 @@ class TreeNode {
   List<TreeNode> children = [];
   Widget? content;
 
-  TreeNode({this.key, this.content, required this.children});
+  TreeNode({
+    this.key,
+    this.content,
+    required this.children,
+  });
 }

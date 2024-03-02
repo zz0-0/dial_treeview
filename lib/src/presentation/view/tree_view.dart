@@ -22,14 +22,10 @@ class TreeView extends ConsumerStatefulWidget {
 class _TreeViewState extends ConsumerState<TreeView> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (final node in widget.nodes)
-          TreeNodeWidget(
-            node: node,
-            indent: widget.indent!,
-          ),
-      ],
+    return buildNodes(
+      widget.nodes,
+      widget.indent,
+      widget.iconSize,
     );
   }
 }
