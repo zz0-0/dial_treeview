@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TreeNode {
   Key? key;
-  List<TreeNode> children = [];
+  List<TreeNode>? children = [];
   Widget? content;
 
   TreeNode({

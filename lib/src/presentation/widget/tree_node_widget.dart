@@ -21,7 +21,7 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
   @override
   Widget build(BuildContext context) {
     final icon = isLeaf(widget.node)
-        ? null
+        ? const Icon(Icons.abc)
         : isExpanded(widget.key!)
             ? const Icon(Icons.expand_more)
             : const Icon(Icons.chevron_right);
@@ -30,7 +30,7 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
       children: [
         Row(
           children: [
-            IconButton(onPressed: onPressed, icon: icon!),
+            if (icon != null) IconButton(onPressed: onPressed, icon: icon),
             widget.node.content!,
           ],
         ),
@@ -50,7 +50,7 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
   }
 
   bool isLeaf(TreeNode node) {
-    return node.children.isEmpty;
+    return node.children!.isEmpty;
   }
 
   bool isExpanded(Key key) {
@@ -68,16 +68,17 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
   }
 }
 
-Widget buildNodes(Iterable<TreeNode> nodes, double? indent, double? iconSize) {
+Widget buildNodes(Iterable<TreeNode>? nodes, double? indent, double? iconSize) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      for (final node in nodes)
+      for (final node in nodes!)
         TreeNodeWidget(
+          key: node.key,
           node: node,
           indent: indent!,
           iconSize: iconSize!,
-        )
+        ),
     ],
   );
 }
