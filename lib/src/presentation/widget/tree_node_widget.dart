@@ -30,7 +30,10 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
       children: [
         Row(
           children: [
-            IconButton(onPressed: onPressed, icon: icon),
+            if (isLeaf(widget.node))
+              IconButton(onPressed: onPressed, icon: icon)
+            else
+              icon,
             widget.node.content!,
           ],
         ),
