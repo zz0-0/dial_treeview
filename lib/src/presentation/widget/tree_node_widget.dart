@@ -30,7 +30,7 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
       children: [
         Row(
           children: [
-            if (icon != null) IconButton(onPressed: onPressed, icon: icon),
+            IconButton(onPressed: onPressed, icon: icon),
             widget.node.content!,
           ],
         ),
@@ -50,6 +50,9 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
   }
 
   bool isLeaf(TreeNode node) {
+    if (node.children == null) {
+      return false;
+    }
     return node.children!.isEmpty;
   }
 
@@ -69,8 +72,9 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
 }
 
 Widget buildNodes(Iterable<TreeNode>? nodes, double? indent, double? iconSize) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+  return ListView(
+    clipBehavior: Clip.antiAlias,
+    shrinkWrap: true,
     children: [
       for (final node in nodes!)
         TreeNodeWidget(

@@ -8,6 +8,6 @@ class TreeNode {
   TreeNode({
     this.key,
     this.content,
-    required this.children,
+    this.children,
   });
 }

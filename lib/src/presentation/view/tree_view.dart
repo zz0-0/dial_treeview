@@ -8,7 +8,7 @@ class TreeView extends ConsumerStatefulWidget {
     super.key,
     required this.nodes,
     this.indent = 40,
-    this.iconSize = 32,
+    this.iconSize = 8,
   });
 
   final List<TreeNode> nodes;
