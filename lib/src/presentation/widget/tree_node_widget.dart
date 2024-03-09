@@ -31,10 +31,16 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
         Row(
           children: [
             if (isLeaf(widget.node))
-              IconButton(onPressed: onPressed, icon: icon)
+              icon
             else
-              icon,
-            widget.node.content!,
+              IconButton(onPressed: onPressed, icon: icon),
+            // widget.node.content!,
+            Flexible(
+              child: Text(
+                widget.node.content!,
+                style: const TextStyle(fontSize: 8),
+              ),
+            ),
           ],
         ),
         if (isExpanded(widget.key!) && !isLeaf(widget.node))
@@ -42,8 +48,8 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
             padding: EdgeInsets.only(
               left: widget.indent,
             ),
-            child: buildNodes(
-              widget.node.children,
+            child: buildNode(
+              widget.node,
               widget.indent,
               widget.iconSize,
             ),
@@ -53,10 +59,7 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
   }
 
   bool isLeaf(TreeNode node) {
-    if (node.children == null) {
-      return false;
-    }
-    return node.children!.isEmpty;
+    return node.children.isEmpty;
   }
 
   bool isExpanded(Key key) {
@@ -74,18 +77,11 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
   }
 }
 
-Widget buildNodes(Iterable<TreeNode>? nodes, double? indent, double? iconSize) {
-  return ListView(
-    clipBehavior: Clip.antiAlias,
-    shrinkWrap: true,
-    children: [
-      for (final node in nodes!)
-        TreeNodeWidget(
-          key: node.key,
-          node: node,
-          indent: indent!,
-          iconSize: iconSize!,
-        ),
-    ],
+Widget buildNode(TreeNode node, double? indent, double? iconSize) {
+  return TreeNodeWidget(
+    key: node.key,
+    node: node,
+    indent: indent!,
+    iconSize: iconSize!,
   );
 }
