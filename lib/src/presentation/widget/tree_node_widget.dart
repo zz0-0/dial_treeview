@@ -31,9 +31,15 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
         Row(
           children: [
             if (isLeaf(widget.node))
-              icon
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: icon,
+              )
             else
-              IconButton(onPressed: onPressed, icon: icon),
+              IconButton(
+                onPressed: onPressed,
+                icon: icon,
+              ),
             Flexible(
               child: Text(
                 widget.node.content!,
