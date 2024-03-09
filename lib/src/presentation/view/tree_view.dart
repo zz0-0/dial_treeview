@@ -27,7 +27,6 @@ class _TreeViewState extends ConsumerState<TreeView> {
   @override
   Widget build(BuildContext context) {
     final List<TreeNode> nodes = parseFileSystemEntity(widget.entities);
-
     return ListView.builder(
       clipBehavior: Clip.antiAlias,
       shrinkWrap: true,
@@ -38,9 +37,11 @@ class _TreeViewState extends ConsumerState<TreeView> {
     );
   }
 
+  final uniquePaths = <String>{};
+
   List<TreeNode> parseFileSystemEntity(List<FileSystemEntity> entities) {
     final rootNode = <TreeNode>[];
-    var uniquePaths = <String>{};
+
     for (final entity in entities) {
       if (entity is Directory) {
         final children = parseFileSystemEntity(entity.listSync());
@@ -60,17 +61,13 @@ class _TreeViewState extends ConsumerState<TreeView> {
           uniquePaths.add(entity.path);
           final segments = entity.uri.pathSegments;
           final content = segments.last;
-          // if (widget.currentDirectory.uri.pathSegments.last == parent) {
           final currentNode = TreeNode(
             key: Key(content),
-            isDirectory: true,
             path: entity.path,
             content: content,
           );
           rootNode.add(currentNode);
         }
-
-        // }
       }
     }
     return rootNode;

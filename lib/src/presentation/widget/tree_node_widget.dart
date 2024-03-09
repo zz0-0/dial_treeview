@@ -34,7 +34,6 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
               icon
             else
               IconButton(onPressed: onPressed, icon: icon),
-            // widget.node.content!,
             Flexible(
               child: Text(
                 widget.node.content!,
@@ -43,15 +42,20 @@ class _TreeNodeWidgetState extends ConsumerState<TreeNodeWidget> {
             ),
           ],
         ),
-        if (isExpanded(widget.key!) && !isLeaf(widget.node))
+        if (isExpanded(widget.key!))
           Padding(
-            padding: EdgeInsets.only(
-              left: widget.indent,
-            ),
-            child: buildNode(
-              widget.node,
-              widget.indent,
-              widget.iconSize,
+            padding: EdgeInsets.only(left: widget.indent),
+            child: ListView.builder(
+              clipBehavior: Clip.antiAlias,
+              shrinkWrap: true,
+              itemCount: widget.node.children.length,
+              itemBuilder: (context, index) {
+                return buildNode(
+                  widget.node.children[index],
+                  widget.indent,
+                  widget.iconSize,
+                );
+              },
             ),
           ),
       ],
